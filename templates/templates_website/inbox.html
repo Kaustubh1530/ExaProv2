@@ -1,0 +1,123 @@
+{% extends 'base_website.html' %}
+{% block content %}
+{% load static %}
+<br>
+{% csrf_token %}
+<br>
+<link rel="stylesheet" href="{% static 'assets/css/atlantis.css' %}">
+
+<div class="container" style="font-family: Verdana, Geneva, Tahoma, sans-serif;">
+    <div class="messages">
+        {% if error %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{error}}
+        </div>
+        {% endif %}
+        {% for o,j in all_msgs.items %}
+        <div class="message">
+            <div class="dropdown">
+                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false"> Options </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item"
+                        href="https://mail.google.com/mail/u/0/?view=cm&fs=1&tf=1&to={{j.email}}">Reply</a>
+                    <a class="dropdown-item" href="{% url 'delete_contact' id=j.id %}">Delete</a>
+                </div>
+            </div>
+            <span class="title" style="width:80%; margin-top:20px;"><b>Name : </b>{{j.name}}</i></span>
+            <span class="title"><b>Email : </b> {{j.email}}</span>
+            <span class="title"><b>Date : </b> {{j.date}}&emsp;<b>Time : </b>{{j.time}}</span>
+            <span class="title"><b>Message : </b> {{j.message}}</span>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<style>
+    * {
+        margin: 0px;
+        padding: 0px;
+        border: none;
+        box-sizing: border-box;
+    }
+
+    b {
+        color: yellow;
+    }
+
+    .container {
+        overflow: scroll;
+        height: 90%;
+    }
+
+    .message {
+        clear: both;
+        margin-bottom: 15px;
+        position: relative;
+        padding: 20px 10px;
+        border-radius: 5px;
+        background-color: #40006e;
+        border: 1.3px solid black;
+        overflow-wrap: break-word;
+    }
+
+    .message input {
+        position: absolute;
+        top: 8px;
+        left: 10px;
+        width: 30px;
+    }
+
+
+    .message .title {
+        display: inline-block;
+        padding-left: 15px;
+        width: 100%;
+        color: rgb(255, 255, 255);
+        font-size: 14px;
+    }
+
+    .message .date {
+        position: absolute;
+        right: 10px;
+    }
+
+    .dropdown{
+        float: right !important;
+    }
+    .btn {
+        float: right;
+        z-index: 5;
+        margin-right: 20px;
+        background-color: #ff006a;
+        border-color: #ff006a;
+        color: white;
+    }
+
+    .btn:hover {
+        color: white;
+    }
+
+    .dropdown-menu a {
+        text-decoration: none;
+    }
+
+    .dropdown-menu a:hover {
+        background-color: rgb(199, 199, 199);
+    }
+
+    @media(max-width: 786px) {
+        .btn {
+            float:none;
+            margin-top: -10px; 
+            margin-bottom: -11px;
+            margin-right: 20px !important;
+            width: 100%;
+        }
+
+    }
+</style>
+
+<script>setTimeout(function () { location.reload() }, 10000);</script>
+
+
+{% endblock content %}
